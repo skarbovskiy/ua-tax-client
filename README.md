@@ -12,13 +12,13 @@ const { initTaxClient, errors } = require('ua-tax-client');
 const crypto = {
   /**
   * @param {string} payload - base64 string
-  * @return {Promise(string)} original data with sign included
+  * @return {Promise(string)} original data with sign included in base64 format
   */
   sign: (payload) => {},
 
   /**
   * @param {string} payload - base64 string
-  * @return {Promise(string)} original data without internal sign
+  * @return {Promise(string)} original data without internal sign in base64 format
   */
   removeInternalSign: (payload) => {}
 }
