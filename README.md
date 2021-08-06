@@ -10,17 +10,17 @@ const { initTaxClient, errors } = require('ua-tax-client');
 
 //your ukrainian crypto provider wrapper (jkurwa, iit lib etc)
 const crypto = {
-	/**
-	* @param {string} payload - base64 string
-	* @return {Promise(string)} original data with sign included
-	*/
-	sign: (payload) => {},
+  /**
+  * @param {string} payload - base64 string
+  * @return {Promise(string)} original data with sign included
+  */
+  sign: (payload) => {},
 
-	/**
-	* @param {string} payload - base64 string
-	* @return {Promise(string)} original data without internal sign
-	*/
-	removeInternalSign: (payload) => {}
+  /**
+  * @param {string} payload - base64 string
+  * @return {Promise(string)} original data without internal sign
+  */
+  removeInternalSign: (payload) => {}
 }
 
 const client = initTaxClient({ logProvider: console, cryptoProvider: crypto });
@@ -32,9 +32,9 @@ const HttpProxyAgent = require('http-proxy-agent');
 const { initTaxClient, errors } = require('ua-tax-client');
 
 const service = initTaxClient({
-	logProvider: console,
-	cryptoProvider: crypto,
-	proxyProvider: new HttpProxyAgent('http://10.1.1.1:3128')
+  logProvider: console,
+  cryptoProvider: crypto,
+  proxyProvider: new HttpProxyAgent('http://10.1.1.1:3128')
 });
 ```
 
@@ -49,41 +49,41 @@ const service = initTaxClient({ useMockClient: true });
 ## Usage
 ```js
 async function main() {
-	const client = initTaxClient({ logProvider: console, cryptoProvider: crypto });
-	let ticketResponse = await client.sendDoc({
-		CHECK: {
-			$: {
-				'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-				'xsi:noNamespaceSchemaLocation': 'check01.xsd'
-			},
-			CHECKHEAD: {
-				DOCTYPE: '101',
-				UID: '11111-1111-11111',
-				TIN: '34554362',
-				IPN: '123456789019',
-				ORGNM: 'Тестовий платник 3',
-				POINTNM: 'Тестовий платник 3',
-				POINTADDR: 'УКРАЇНА, ОДЕСЬКА ОБЛАСТЬ, М.БІЛГОРОД-ДНІСТРОВСЬКИЙ, СМТ.ЗАТОКА вул Приморська 32',
-				ORDERDATE: '20062020',
-				ORDERTIME: '202020',
-				ORDERNUM: 1,
-				CASHDESKNUM: 2,
-				CASHREGISTERNUM: '4000094201',
-				CASHIER: 'А А А',
-				VER: '1'
-			}
-		}
-	});
+  const client = initTaxClient({ logProvider: console, cryptoProvider: crypto });
+  let ticketResponse = await client.sendDoc({
+    CHECK: {
+      $: {
+        'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+        'xsi:noNamespaceSchemaLocation': 'check01.xsd'
+      },
+      CHECKHEAD: {
+        DOCTYPE: '101',
+        UID: '11111-1111-11111',
+        TIN: '34554362',
+        IPN: '123456789019',
+        ORGNM: 'Тестовий платник 3',
+        POINTNM: 'Тестовий платник 3',
+        POINTADDR: 'УКРАЇНА, ОДЕСЬКА ОБЛАСТЬ, М.БІЛГОРОД-ДНІСТРОВСЬКИЙ, СМТ.ЗАТОКА вул Приморська 32',
+        ORDERDATE: '20062020',
+        ORDERTIME: '202020',
+        ORDERNUM: 1,
+        CASHDESKNUM: 2,
+        CASHREGISTERNUM: '4000094201',
+        CASHIER: 'А А А',
+        VER: '1'
+      }
+    }
+  });
 
-	let commandResponse = await client.sendCommand({
-		Command: 'TransactionsRegistrarState',
-		NumFiscal: '4000094201'
-	});
+  let commandResponse = await client.sendCommand({
+    Command: 'TransactionsRegistrarState',
+    NumFiscal: '4000094201'
+  });
 
-	/**
-	* @param {array} documents - array of buffers (presigned offline docs ready to be sent to tax)
-	*/
-	let pkgResponse = await client.sendPackage([Buffer.from('')]);
+  /**
+  * @param {array} documents - array of buffers (presigned offline docs ready to be sent to tax)
+  */
+  let pkgResponse = await client.sendPackage([Buffer.from('')]);
 }
 ```
 
